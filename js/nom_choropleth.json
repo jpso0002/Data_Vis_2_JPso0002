@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": { "text": "Australia Net Overseas Migration per Region (per 1,000)",
+  "fontSize": 18},
+  "background": null,
+  "width": 1040,
+  "height": 650,
+  "projection": {"type": "mercator"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/jpso0002/Data_Vis_2_JPso0002/refs/heads/main/js/sa4_2021.json",
+    "format": {"type": "topojson", "feature": "SA4_2021_AUST_GDA2020"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.SA4_CODE21",
+      "from": {
+        "data": {"url": "https://raw.githubusercontent.com/jpso0002/Data_Vis_2_JPso0002/refs/heads/main/data/sa4_migration.csv"},
+        "key": "SA4_CODE21",
+        "fields": ["year","net_migration_nom","population","SA4_NAME21"]
+      }
+    },
+    {
+      "calculate": "(datum.net_migration_nom / datum.population) * 1000",
+      "as": "net_per_1000"
+    }
+  ],
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "net_per_1000",
+      "type": "quantitative",
+      "title": "Net overseas migration per 1,000",
+      "scale": {
+        "type": "threshold",
+        "domain": [-10, -5, -1, 1, 5, 10],
+        "range": ["#762a83","#af8dc3","#e7d4e8","#f7f7f7","#d9f0d3","#7fbf7b","#1b7837"]
+      }
+    },
+    "tooltip": [
+      {"field": "properties.SA4_NAME21", "title": "Region"},
+      {"field": "net_migration_nom", "title": "Net migration", "format": ","},
+      {"field": "population", "title": "Population", "format": ","},
+      {"field": "net_per_1000", "title": "Per 1,000", "format": ".2f"}
+    ]
+  },
+  "config": {
+    "style": {
+    "guide-title": { "font": "Manrope" },
+    "guide-label": { "font": "Inter" }
+  },
+    "legend": {"orient": "right"},
+    "view": {"stroke": null}
+  }
+}

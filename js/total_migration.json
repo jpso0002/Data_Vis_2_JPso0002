@@ -1,0 +1,112 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top 10 SA4 Regions by Total Net Migration",
+    "anchor": "start",
+  "fontSize": 18},
+  "background": null,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jpso0002/Data_Vis_2_JPso0002/refs/heads/main/data/sa4_top10_total.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "width": 1050,
+  "height": 480,
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.85,
+        "stroke": "#1b7837",
+        "color": "#7fbf7b",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "x": {
+          "field": "net_migration_nim",
+          "type": "quantitative",
+          "title": "Net Internal Migration (NIM)"
+        },
+        "y": {
+          "field": "net_migration_nom",
+          "type": "quantitative",
+          "title": "Net Overseas Migration (NOM)"
+        },
+        "size": {
+          "field": "total_net_migration",
+          "type": "quantitative",
+          "title": "Total Net Migration",
+          "scale": {
+            "range": [
+              100,
+              2000
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "SA4_NAME",
+            "type": "nominal",
+            "title": "SA4"
+          },
+          {
+            "field": "year",
+            "type": "quantitative"
+          },
+          {
+            "field": "net_migration_nim",
+            "type": "quantitative",
+            "title": "NIM"
+          },
+          {
+            "field": "net_migration_nom",
+            "type": "quantitative",
+            "title": "NOM"
+          },
+          {
+            "field": "total_net_migration",
+            "type": "quantitative",
+            "title": "Total Net"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -9,
+        "fontSize": 12
+      },
+      "encoding": {
+        "x": {
+          "field": "net_migration_nim",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "net_migration_nom",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "SA4_NAME",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "style": {
+    "guide-title": { "font": "Manrope" },
+    "guide-label": { "font": "Inter" }
+  },
+    "legend": {
+      "orient": "right"
+    },
+    "axis": {
+      "grid": true
+    },
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

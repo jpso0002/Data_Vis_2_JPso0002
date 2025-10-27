@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Australian Migration Flows by SA4 (2024)</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <header class="container">
+    <h1>Australia in Motion: Internal vs Overseas Migration Patterns in 2024</h1>
+    <p class="sub">Internal vs. overseas migration patterns across Statistical Areas Level 4 (SA4)</p>
+  </header>
+
+  <!-- Overview -->
+  <section class="container">
+    <div class="card">
+      <h2>How does Australia's Population Move?</h2>
+      <p class="muted">
+        Australia’s population shifts in two main ways: people move between regions within the country and people arrive from (or depart to) overseas. Net Internal Migration (NIM) measures the balance of people moving into an SA4 region from other Australian regions minus those leaving it. Net Overseas Migration (NOM) measures the balance of people entering Australia from abroad to live in a region minus those departing overseas. The SA4 categorises Australia into large, standardised regions designed to reflect labour-market areas where people live/work. This project maps both streams at the SA4 level, standardises them per 1,000 residents to compare places of different sizes, and combines them to show total net migration pressures and pulls.
+      </p>
+    </div>
+  </section>
+
+  <!-- NIM Choropleth -->
+  <section class="container">
+    <h2>Internal Australian Movers In 2024</h2>
+    <div id="nim-choropleth" class="chart full"></div>
+    <div class="card" style="margin-top: var(--gap);">
+      <h3>About this map</h3>
+      <div class="twocol">
+        <p class="muted">
+          This choropleth shows Net Internal Migration (NIM) per 1,000 residents for 2024. Darker green tones indicate net inflows and darker purple tones indicate net outflows. The geography is at the SA4 regions level, which captures broad labour-market regions suitable for spotting big-picture patterns rather than suburb-level detail. Values are a single-year snapshot, not cumulative across years, and are standardised by mid-year population so regions of different sizes can be compared fairly. 
+        </p>
+        <p class="muted">
+          We draw this data from ABS regional population components for SA4s. This metric includes only internal moves within Australia, excluding all overseas arrivals or departures.
+        </p>
+        <p class="muted">
+          We expect to see net inflows clustering in outer-metropolitan growth corridors and selected regional hubs, while some inner-city SA4s may show net outflows tied to housing costs and life-stage churn. As seen the Queensland - Outback region has seen a significant outflow of internal residents whilst many areas in the east coast have seen large inflows per 1000 people.
+        </p>
+        <p class="muted">
+Rates in small or rapidly changing SA4s can swing from year to year, and factors like student cycles, housing supply shifts, or one-off events may skew a single year’s result, so it is important not to over analyse such areas. 
+        </p>
+        <p class="muted">
+We will compare this map with the NOM choropleth below to see where patterns overlap and where they diverge. Thus we can infer whether a region’s change is driven mainly by domestic re-sorting (NIM) or by overseas arrivals (NOM), giving us a clue to the composition and persistence of local population change.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOM Choropleth -->
+  <section class="container">
+    <h2>External Australian Movers In 2024</h2>
+    <div id="nom-choropleth" class="chart full"></div>
+    <div class="card" style="margin-top: var(--gap);">
+      <h3>About this map</h3>
+      <div class="twocol">
+        <p class="muted">
+Net Overseas Migration (NOM) is the balance of people arriving from overseas to live in Australia minus those departing overseas, standardised here as NOM per 1,000 residents for SA4 regions in 2024. Because overseas arrivals cluster where universities, jobs, and settlement services are concentrated, you’ll often see higher rates in capital-city cores, inner suburbs, and student hubs with large rental markets. This is a single-year snapshot, not a cumulative trend.        </p>
+        <p class="muted">
+As we can see Australia is a hub for overseas migration with almost all the SA4s showing net inflows.
+        </p>        
+<p class="muted">
+Comparing this alongside the NIM map to see what’s driving growth we see that some SA4s show strong NOM inflows but flat or negative NIM. These are typically inner-city university belts attracting international students and recent migrants even as locals move outward for space or affordability. Conversely, outer-metropolitan growth corridors may post positive NIM but only modest NOM, reflecting domestic re-sorting rather than overseas arrivals.         </p>
+        <p class="muted">
+In contrast to the NIM map the Queensland – Outback region actually has an inflow of overseas migration where as some of the east coast locations have inflows of both overseas and internal migration.        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bar Charts -->
+  <section class="container">
+    <h2>Highest Migration Regions by NIM and NOM</h2>
+    <div class="controls">
+      <label><input type="radio" name="metricToggle" value="NIM" checked> Show Top 6 NIM</label>
+      <label><input type="radio" name="metricToggle" value="NOM"> Show Top 6 NOM</label>
+      <span class="muted">Toggle will switch the bar chart between NIM and NOM.</span>
+    </div>
+    <div class="split">
+      <div id="top6-bar" class="chart"></div>
+      <div class="card">
+        <h3>Why are people moving?</h3>
+        <p class="muted">
+The Top 6 NIM chart shows Australia’s internal movers concentrating in growth corridors which are particularly across South-East Queensland as well as fast-growing outer-metro areas. In 2024, Logan–Beaudesert leads internal gains at around 7.6k, followed by Wide Bay, Moreton Bay–North, and the Sunshine Coast, with Perth–South West and Melbourne–West also prominent. This profile is typical of domestic migration, as households chase comparatively affordable housing, lifestyle amenities and access to jobs in expanding suburban nodes.        </p>
+        <p class="muted">
+By contrast, the Top 6 NOM chart concentrates in capital-city cores and student/work hubs. In 2024, Melbourne–Inner sits far ahead at around 30.6k, followed by Melbourne–South East and Melbourne–West, with Sydney–Parramatta, Sydney–City & Inner South, and Sydney–Inner South West. Overseas arrivals skew to post-study and knowledge-economy precincts, this is areas close to universities, major hospitals, CBD employment, and dense rental markets. Thus the biggest bars cluster around inner Melbourne and Sydney.        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- bubble chart -->
+  <section class="container">
+    <h2>Total Migration (NIM + NOM) — Highest Regions Overall</h2>
+    <div id="total-migration-chart" class="chart full"></div>
+    <div class="card" style="margin-top: var(--gap);">
+      <h3>What is Driving Migration?</h3>
+      <div class="twocol">
+        <p class="muted">
+Interpreting the quadrants of this bubble chart helps explain what’s driving growth. The upper-right section(high NIM, high NOM) signals broad attractiveness. This means these regions pull residents from elsewhere in Australia and also from abroad. The upper-left (low/negative NIM, high NOM) suggests areas the mainly attract overseas arrivals. These are commonly inner-city/student hubs which have limited internal draw. The lower-right (high NIM, low NOM) points to classic domestic growth corridors where Australians are moving for housing and lifestyle changes, even if overseas intake is modest.         
+</p>
+<p class="muted">
+Finally, the lower-left bubbles, although not present in the top 10, would be rare and these areas indicate regions with limited internal and overseas migration.      </p>
+<p class="muted">
+Overall, the dashboard shows that Australia’s migration landscape is dual-tracked as it follows domestic affordability/lifestyle moves for internal migration and  international gateway inflows for overseas migration with the strongest growth happening when these two currents align.      
+      </p>
+</div>
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <footer class="container">
+    <h2>Sources</h2>
+    <div class="sources">
+      <div class="card">
+        <h3>Data Source 1</h3>
+        <p class="muted">
+              <strong>Source:</strong> Australian Bureau of Statistics (ABS)
+            </p>
+            <p class="muted">
+              <strong>Dataset:</strong> Population components by SA2 and above, 2021-22 to 2023-24
+            </p>
+            <p class="muted">
+              <strong>Info:</strong> Breakdown of Australian population change components by year and different statistical areas.
+            </p>
+            <p class="muted">
+              <strong>URL:</strong>
+              <a href="https://www.abs.gov.au/statistics/people/population/regional-population/2023-24/32180DS0005_2021-24.xlsx" target="_blank"
+                >Population components by SA2 and above, 2021-22 to 2023-24
+              </a>
+            </p>
+      </div>
+      <div class="card">
+        <h3>Data Source 2</h3>
+        <p class="muted">
+              <strong>Source:</strong> Australian Bureau of Statistics (ABS)
+            </p>
+            <p class="muted">
+              <strong>Dataset:</strong> Population estimates by SA2 and above, 2001 to 2024
+            </p>
+            <p class="muted">
+              <strong>Info:</strong> Breakdown of Australian total estimated resident population by year and different statistical areas.
+            </p>
+            <p class="muted">
+              <strong>URL:</strong>
+              <a href="https://www.abs.gov.au/statistics/people/population/regional-population/2023-24/32180DS0003_2001-24.xlsx" target="_blank"
+                >Population estimates by SA2 and above, 2001 to 2024
+              </a>
+            </p>
+      </div>
+      <div class="card">
+        <h3>Authorship</h3>
+        <p class="muted">
+              <strong>Author:</strong> Jordan Psomas
+            </p>
+            <p class="muted">
+              <strong>Last Edited:</strong> 27/10/2025
+            </p>
+      </div>
+    </div>
+
+
+  </footer>
+
+  <!-- Embed charts -->
+  <script>
+    
+    vegaEmbed('#nim-choropleth', 'js/nim_choropleth.json', {actions:false})
+      .catch(err => console.error('NIM embed failed:', err));
+
+    vegaEmbed('#nom-choropleth', 'js/nom_choropleth.json', {actions:false})
+      .catch(err => console.error('NOM embed failed:', err));
+
+    
+    let currentMetric = 'NIM';
+    const top6SpecByMetric = {
+      NIM: 'js/top6_bar_nim.json',
+      NOM: 'js/top6_bar_nom.json'
+    };
+
+    function renderTop6(metric) {
+      vegaEmbed('#top6-bar', top6SpecByMetric[metric], {actions:false})
+        .catch(err => console.error('Top 6 embed failed:', err));
+    }
+    renderTop6(currentMetric);
+
+    document.querySelectorAll('input[name="metricToggle"]').forEach(r => {
+      r.addEventListener('change', (e) => {
+        currentMetric = e.target.value;
+        renderTop6(currentMetric);
+      });
+    });
+
+    vegaEmbed('#total-migration-chart', 'js/total_migration.json', {actions:false})
+      .catch(err => console.error('Total migration embed failed:', err));
+  </script>
+</body>
+</html>

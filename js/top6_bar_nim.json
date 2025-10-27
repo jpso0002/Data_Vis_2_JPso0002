@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": { "text": "Top 6 SA4 regions by Net Internal Migration (NIM), 2024", "anchor": "start",
+  "fontSize": 18},
+  "background": null,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jpso0002/Data_Vis_2_JPso0002/refs/heads/main/data/sa4_migration_sorted_by_nim.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "calculate": "toNumber(datum.year)", "as": "year_num" },
+    { "filter": "datum.year_num == 2024" },
+
+    { "calculate": "toNumber(datum.net_migration_nim)", "as": "nim_num" },
+
+    {
+      "window": [{ "op": "row_number", "as": "row" }],
+      "sort": [{ "field": "nim_num", "order": "descending" }]
+    },
+    { "filter": "datum.row <= 6" }
+  ],
+  "mark": { "type": "bar", "cornerRadiusEnd": 4 },
+  "encoding": {
+    "y": {
+      "field": "SA4_NAME",
+      "type": "nominal",
+      "title": "Region (SA4)",
+      "sort": "-x"
+    },
+    "x": {
+      "field": "nim_num",
+      "type": "quantitative",
+      "title": "Net Internal Migration (NIM)",
+      "axis": { "format": ",d" },
+      "scale": { "nice": true }
+    },
+    "tooltip": [
+      { "field": "SA4_NAME", "title": "Region" },
+      { "field": "nim_num", "title": "NIM", "format": ",d" }
+    ],
+    "color": { "value": "#7fbf7b" }
+  },
+  "width": 475,
+  "height": { "step": 66 },
+  "config": {
+    "style": {
+    "guide-title": { "font": "Manrope" },
+    "guide-label": { "font": "Inter" }
+  },
+    "view": { "stroke": null },
+    "axis": { "labelLimit": 220 }
+  }
+}
+
